@@ -1,0 +1,23 @@
+Option 1
+// MARK: Iphone X Layout FIX
+extension JSQMessagesInputToolbar {
+    override open func didMoveToWindow() {
+        super.didMoveToWindow()
+        guard let window = window else { return }
+        if #available(iOS 11.0, *) {
+            let anchor = window.safeAreaLayoutGuide.bottomAnchor
+            bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(anchor, multiplier: 1.0).isActive = true
+        }
+    }
+}  // End fix iPhone x
+
+option 2 
+override func viewDidLayoutSubviews() {
+       perform(Selector(("jsq_updateCollectionViewInsets")))
+    } 
+ 
+ // Start fix for iPhone X
+ let constraint = perform(Selector(("toolbarBottomLayoutGuide"))).takeUnretainedValue() as! NSLayoutConstraint
+ constraint.priority = UILayoutPriority(rawValue: 1000)
+ self.inputToolbar.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+ // End fix for iPhone X
